@@ -1,28 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> <!--320-->
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <!--320-->
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /> -->
-        <title>Template</title> 
-        <!--build:css css/styles.min.css-->
-        <link rel="stylesheet" type="text/css" href="css/styles.css" />
-        <link rel="icon" type="image/png" href="http://media-hearth.cursecdn.com/avatars/89/417/635445015183127109.jpeg">
-        <!--endbuild--> 
+    <title>Template</title>
+    <!--build:css css/styles.min.css-->
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <link rel="icon" type="image/png" href="http://media-hearth.cursecdn.com/avatars/89/417/635445015183127109.jpeg">
+    <!--endbuild-->
 </head>
+
 <body>
- 
-<canvas id="Canvas" width="375" height="663"></canvas>
 
-        <div id="startPage" class="startPage" width="375" height="663">
-            <input type="text" id="user" placeholder="Nickname" />
-            <input type="button" id="start" value="start" onclick="startGame()"/>   
-        </div> 
+    <div id="startPage" class="startPage" width="375" height="663">
+        <div class="nickName"><input type="text" id="user" placeholder="Nickname" /></div>
+        <div class="startButton">
+            <div class="submitButton" id="start" onclick="document.getElementById('start').click()">Start</div>
+            <input style="display:none;" id="start" type="submit" onclick="startGame()" />
+            <!--display:none-->
+        </div>
+        <div id="showName"></div>
+        <div id="showScore"></div>
+    </div>
 
-  <!--build:js js/main.min.js --> 
-        <script src="js/scripts.js"></script> 
-        <script src="js/paintCans.js"></script> 
-        <!-- endbuild -->
-    </body>
+
+
+
+    <canvas id="Canvas" width="375" height="663"></canvas>
+
+    <!--build:js js/main.min.js -->
+    <script src="js/scripts.js"></script>
+    <!-- endbuild -->
+</body>
+
 </html>
 
 
@@ -31,4 +43,4 @@
 npm install -g localtunnel
 lt --port 8000
 gives a url which can b used on iphone
---> 
+-->
