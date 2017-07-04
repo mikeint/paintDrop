@@ -538,9 +538,17 @@ function startGame() {
         }
     }
 
+    var event = '';
+    if (screen.width <= 480) event = 'touchstart';
+    else event = 'click';
 
+    var ua = navigator.userAgent.toLowerCase();
+    var isAndroid = ua.indexOf("android") > -1;
+    if (isAndroid) {
+        event = 'click';
+    }
 
-    canvas.addEventListener('touchstart', function(event) {
+    canvas.addEventListener(event, function(event) {
         var xClick = event.pageX - elemLeft;
         var yClick = event.pageY - elemTop;
 
@@ -559,9 +567,10 @@ function startGame() {
 
                             score += 5;
 
+                            if (score % 100 == 0) changePaintBoard();
+
                             console.log(paintBalls[lane].colour, paintScores[lane].y, paintScores[lane].height);
                             addPaintScore(paintBalls[lane].colour, paintScores[lane].y, paintScores[lane].height);
-
 
                             if (lane == 0) paintBalls.shift();
                             else paintBalls.splice(lane, 1);
