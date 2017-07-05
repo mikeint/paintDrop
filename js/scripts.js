@@ -329,7 +329,7 @@ function startGame() {
 
 
     function drawPaintScore(colour, i) {
-        ctx.font = "24px Exo 2.0 Regular";
+        ctx.font = "24px Arial";
         ctx.fillStyle = colour;
 
         if (i == 0) ctx.fillText(paintScores[0].amount, 133, 48);
