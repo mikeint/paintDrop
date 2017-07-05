@@ -481,6 +481,24 @@ function startGame() {
     }
 
 
+
+    /* ADDED NEW NEED TO CHECK-------------------------------------- */
+    var alpha = 1.0;
+    var globalPaintCanClickx = 0;
+    var globalPaintCanClicky = 0;
+
+    function animatePoint(text, x, y, showPoint) {
+        if (showPoint) {
+            ctx.fillStyle = "rgba(255, 255, 255, " + alpha + ")";
+            ctx.font = "italic 20pt Arial";
+            ctx.fillText(text, x - 20, y + 10);
+            alpha = alpha - 0.005;
+        }
+    }
+    /* ADDED NEW NEED TO CHECK-------------------------------------- */
+
+
+
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         //console.log("Ball moving: (x,y) ", x, ", ", y, ctx.fillStyle)
@@ -490,7 +508,6 @@ function startGame() {
         paintBucketDrawer();
         PaintArms();
         drawScore();
-
         drawWalls();
         paintButtonsAll();
 
@@ -523,7 +540,7 @@ function startGame() {
             }
 
 
-            if (paintBalls[i].y == 140) {
+            if (paintBalls[i].y <= 140) {
                 console.log("game over")
                 y = 0;
                 for (var i = 1; i < 99999; i++) window.clearInterval(i);
@@ -536,6 +553,17 @@ function startGame() {
 
             }
         }
+        /* ADDED NEW NEED TO CHECK-------------------------------------- */
+        if (alpha >= 1) {
+            animatePoint('+5', globalPaintCanClickx, globalPaintCanClicky, false);
+            alpha = 1;
+        } else {
+            animatePoint('+5', globalPaintCanClickx, globalPaintCanClicky, true);
+            alpha = alpha - 0.005;
+            if (alpha <= 0) alpha = 1.0;
+        }
+        /* ADDED NEW NEED TO CHECK-------------------------------------- */
+
     }
 
     var event = '';
@@ -566,8 +594,14 @@ function startGame() {
                         if (paintBalls[lane].y > paintCans[i].yChord - canRadius && paintBalls[lane].y < canRadius + paintCans[i].yChord && paintBalls[lane].colour == paintCans[i].colour && paintBalls[lane].lane == paintCans[i].lane) {
 
                             score += 5;
+                            /* ADDED NEW NEED TO CHECK-------------------------------------- */
+                            animatePoint('+5', paintCans[i].xChord, paintCans[i].yChord, true);
+                            globalPaintCanClickx = paintCans[i].xChord;
+                            globalPaintCanClicky = paintCans[i].yChord;
+                            /* ADDED NEW NEED TO CHECK-------------------------------------- */
 
                             if (score % 100 == 0) changePaintBoard();
+                            if (score % 20 == 0) dy = dy + 0.1;
 
                             console.log(paintBalls[lane].colour, paintScores[lane].y, paintScores[lane].height);
                             addPaintScore(paintBalls[lane].colour, paintScores[lane].y, paintScores[lane].height);
@@ -584,6 +618,8 @@ function startGame() {
 
                             paintButtons[lane].pushed = false;
                             animateButton(paintBalls[lane].lane, true);
+
+
 
 
                         }

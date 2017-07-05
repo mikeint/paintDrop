@@ -14,15 +14,17 @@
 
 <body>
 
-    <div id="startPage" class="startPage" width="375" height="663">
-        <div class="nickName"><input type="text" id="user" placeholder="Nickname" /></div>
-        <div class="startButton">
-            <div class="submitButton" id="start" onclick="document.getElementById('start').click()">Start</div>
-            <input style="display:none;" id="start" type="submit" onclick="startGame()" />
-            <!--display:none-->
+    <div id="startPage" class="startPage">
+        <div class="startContainer">
+            <div class="nickName"><input type="text" id="user" placeholder="Nickname" /></div>
+            <div class="startButton">
+                <div class="submitButton" id="start" onclick="document.getElementById('start').click()">Start</div>
+                <input style="display:none;" id="start" type="submit" onclick="startGame()" />
+                <!--display:none-->
+            </div>
+            <div id="showName"></div>
+            <div id="showScore"></div>
         </div>
-        <div id="showName"></div>
-        <div id="showScore"></div>
     </div>
 
 
