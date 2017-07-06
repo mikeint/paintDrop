@@ -482,7 +482,7 @@ function startGame() {
 
 
 
-    /* ADDED NEW NEED TO CHECK-------------------------------------- */
+    /* ADDED animate point (check) -------------------------------------- */
     var alpha = 1.0;
     var globalPaintCanClickx = 0;
     var globalPaintCanClicky = 0;
@@ -495,7 +495,41 @@ function startGame() {
             alpha = alpha - 0.005;
         }
     }
-    /* ADDED NEW NEED TO CHECK-------------------------------------- */
+    /* ADDED animate point (check) -------------------------------------- */
+
+
+
+    /* ADDED animate splatter (check) -------------------------------------- */
+    var particles = [];
+    var globalPaintColor = '#FFFFFF';
+
+    var delta = 0;
+    var last = Date.now();
+
+    function animate() {
+        delta = Date.now() - last;
+        last = Date.now();
+        for (var i = 0; i < particles.length; i++) {
+            var p = particles[i];
+            p.x += Math.cos(p.angle) * 4 + Math.random() * 2 - Math.random() * 2;
+            p.y += Math.sin(p.angle) * 4 + Math.random() * 2 - Math.random() * 2;
+            p.life -= delta;
+            p.size -= delta / 50;
+            
+            if (p.size <= 0)
+            {
+                p.life = 0;
+            }
+            
+            if (p.life <= 0)
+            {
+                particles.splice(i--, 1);
+                continue;
+            }
+        }
+    }
+    /* ADDED animate splatter (check) -------------------------------------- */
+
 
 
 
@@ -553,7 +587,7 @@ function startGame() {
 
             }
         }
-        /* ADDED NEW NEED TO CHECK-------------------------------------- */
+        /* ADDED animate point (check) -------------------------------------- */
         if (alpha >= 1) {
             animatePoint('+5', globalPaintCanClickx, globalPaintCanClicky, false);
             alpha = 1;
@@ -562,9 +596,27 @@ function startGame() {
             alpha = alpha - 0.005;
             if (alpha <= 0) alpha = 1.0;
         }
-        /* ADDED NEW NEED TO CHECK-------------------------------------- */
+        /* ADDED animate point (check) -------------------------------------- */
+
+
+
+        /* ADDED animate splatter (check) -------------------------------------- */
+            ctx.fillStyle = globalPaintColor;
+            for (var i = 0; i < particles.length; i++) {
+                if (Math.random() < 0.1) {
+                    continue;
+                }
+                var p = particles[i];
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2, false);
+                ctx.fill();
+            }
+        /* ADDED animate splatter (check) -------------------------------------- */
 
     }
+ 
+ 
+
 
     var event = '';
     if (screen.width <= 480) event = 'touchstart';
@@ -594,11 +646,11 @@ function startGame() {
                         if (paintBalls[lane].y > paintCans[i].yChord - canRadius && paintBalls[lane].y < canRadius + paintCans[i].yChord && paintBalls[lane].colour == paintCans[i].colour && paintBalls[lane].lane == paintCans[i].lane) {
 
                             score += 5;
-                            /* ADDED NEW NEED TO CHECK-------------------------------------- */
+                            /* ADDED animate point (check) -------------------------------------- */
                             animatePoint('+5', paintCans[i].xChord, paintCans[i].yChord, true);
                             globalPaintCanClickx = paintCans[i].xChord;
                             globalPaintCanClicky = paintCans[i].yChord;
-                            /* ADDED NEW NEED TO CHECK-------------------------------------- */
+                            /* ADDED animate point (check) -------------------------------------- */
 
                             if (score % 100 == 0) changePaintBoard();
                             if (score % 20 == 0) dy = dy + 0.1;
@@ -620,7 +672,21 @@ function startGame() {
                             animateButton(paintBalls[lane].lane, true);
 
 
+                            /* ADDED animate splatter (check) -------------------------------------- */
+                            globalPaintColor = paintCans[i].colour;
+                            for (var i = 0; i < 36 * 2; i++) {
+                                particles.push({
+                                    x: globalPaintCanClickx,
+                                    y: globalPaintCanClicky,
+                                    angle: i * 5,
+                                    size: 5 + Math.random() * 10,
+                                    life: 500 + Math.random() * 30
+                                });
+                            }
+                            /* ADDED animate splatter (check) -------------------------------------- */
 
+
+                            
 
                         }
                     }
@@ -629,6 +695,23 @@ function startGame() {
         }
     }, false);
 
+
+
+    /* ADDED animate splatter (check) -------------------------------------- */
+    window.requestAnimFrame = (function(){
+        return  window.requestAnimationFrame   ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame    ||
+            function( callback ){
+                window.setTimeout(callback, 500 / 10);
+            };
+    })();
+
+    (function animloop(){
+        requestAnimFrame(animloop);
+        animate(); 
+    })();
+    /* ADDED animate splatter (check) -------------------------------------- */
 
 
 
