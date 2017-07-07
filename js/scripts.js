@@ -130,8 +130,8 @@ function startGame() {
     //print paint cans on screen
     function PaintBoard(row) {
         for (var i = row * 4; i < (row * 4) + 4; i++) {
-            var c = document.getElementById("Canvas");
-            var ctx = c.getContext("2d");
+            //var c = document.getElementById("Canvas");
+            //var ctx = c.getContext("2d");
             ctx.beginPath();
             ctx.arc(paintCans[i].xChord, paintCans[i].yChord, canRadius, 0, 2 * Math.PI);
             ctx.fillStyle = paintCans[i].colour;
@@ -205,8 +205,8 @@ function startGame() {
     function PaintArms() {
         var j = 0;
         for (var i = 0; i < paintCans.length / 4; i++) {
-            var c = document.getElementById("Canvas");
-            var ctx = c.getContext("2d");
+            // var c = document.getElementById("Canvas");
+            // var ctx = c.getContext("2d");
             ctx.beginPath();
             ctx.arc(50 + j, 143, 38, 0, 2 * Math.PI);
             ctx.fillStyle = "#EFEFF4";
@@ -515,14 +515,12 @@ function startGame() {
             p.y += Math.sin(p.angle) * 4 + Math.random() * 2 - Math.random() * 2;
             p.life -= delta;
             p.size -= delta / 50;
-            
-            if (p.size <= 0)
-            {
+
+            if (p.size <= 0) {
                 p.life = 0;
             }
-            
-            if (p.life <= 0)
-            {
+
+            if (p.life <= 0) {
                 particles.splice(i--, 1);
                 continue;
             }
@@ -601,21 +599,21 @@ function startGame() {
 
 
         /* ADDED animate splatter (check) -------------------------------------- */
-            ctx.fillStyle = globalPaintColor;
-            for (var i = 0; i < particles.length; i++) {
-                if (Math.random() < 0.1) {
-                    continue;
-                }
-                var p = particles[i];
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2, false);
-                ctx.fill();
+        ctx.fillStyle = globalPaintColor;
+        for (var i = 0; i < particles.length; i++) {
+            if (Math.random() < 0.1) {
+                continue;
             }
+            var p = particles[i];
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2, false);
+            ctx.fill();
+        }
         /* ADDED animate splatter (check) -------------------------------------- */
 
     }
- 
- 
+
+
 
 
     var event = '';
@@ -653,7 +651,11 @@ function startGame() {
                             /* ADDED animate point (check) -------------------------------------- */
 
                             if (score % 100 == 0) changePaintBoard();
-                            if (score % 20 == 0) dy = dy + 0.1;
+                            if (score % 20 == 0) {
+                                dy = dy + 0.1;
+                                timerSpeed = timerSpeed - 10;
+                                endPercent = (timerSpeed - 10) + 1;
+                            }
 
                             console.log(paintBalls[lane].colour, paintScores[lane].y, paintScores[lane].height);
                             addPaintScore(paintBalls[lane].colour, paintScores[lane].y, paintScores[lane].height);
@@ -686,7 +688,7 @@ function startGame() {
                             /* ADDED animate splatter (check) -------------------------------------- */
 
 
-                            
+
 
                         }
                     }
@@ -698,18 +700,18 @@ function startGame() {
 
 
     /* ADDED animate splatter (check) -------------------------------------- */
-    window.requestAnimFrame = (function(){
-        return  window.requestAnimationFrame   ||
+    window.requestAnimFrame = (function() {
+        return window.requestAnimationFrame ||
             window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame    ||
-            function( callback ){
+            window.mozRequestAnimationFrame ||
+            function(callback) {
                 window.setTimeout(callback, 500 / 10);
             };
     })();
 
-    (function animloop(){
+    (function animloop() {
         requestAnimFrame(animloop);
-        animate(); 
+        animate();
     })();
     /* ADDED animate splatter (check) -------------------------------------- */
 
