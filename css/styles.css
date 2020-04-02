@@ -46,10 +46,10 @@ Canvas { display: none; }
     background: #e8e8e8; 
     border: 0px solid;
     height: 90px;
-    width: 350px;
+    width: 300px;
     text-align: center;
     font-size: 50px; 
-    font-family: Courier New;
+    padding: 10px 25px; 
 }
 #user:focus {
     outline: none;
